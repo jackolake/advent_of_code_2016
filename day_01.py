@@ -16,6 +16,7 @@ coordinate_map = {
 position_x, position_y = 0, 0
 current_direction = 'N'
 visited_positions = []  # List of positions (x, y)
+found_hq = False
 
 # Read input from file
 with open('day_01.txt', 'r') as file_obj:
@@ -33,7 +34,13 @@ for instruction in input_text.split(', '):
         x_adjustment, y_adjustment = coordinate_adjustment
         position_x = position_x + x_adjustment
         position_y = position_y + y_adjustment
+        # If position was visited, break the loop to print result
+        if (position_x, position_y) in visited_positions:
+            found_hq = True
+            break
         visited_positions.append((position_x, position_y))
+    if found_hq:
+        break
     # Record the new direction
     current_direction = new_direction
 # Print result
