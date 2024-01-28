@@ -5,10 +5,17 @@ direction_map = {
     'S': {'L': 'E', 'R': 'W'},
     'W': {'L': 'S', 'R': 'N'},
 }
+coordinate_map = {
+    'N': (0, 1),
+    'S': (0, -1),
+    'E': (1, 0),
+    'W': (-1, 0)
+}
 
 # Starting condition
 position_x, position_y = 0, 0
 current_direction = 'N'
+visited_positions = []  # List of positions (x, y)
 
 # Read input from file
 with open('day_01.txt', 'r') as file_obj:
@@ -21,19 +28,14 @@ for instruction in input_text.split(', '):
 
     # Execute the instruction
     new_direction = direction_map[current_direction][left_right]
-    if new_direction == 'N':
-        position_y = position_y + steps     # Go north
-    elif new_direction == 'S':              
-        position_y = position_y - steps     # Go south
-    elif new_direction == 'E':
-        position_x = position_x + steps     # Go east
-    elif new_direction == 'W':
-        position_x = position_x - steps     # Go west
-    else:
-        print(f'Wrong direction: {new_direction}')
+    coordinate_adjustment = coordinate_map[new_direction]
+    for step in range(steps):
+        x_adjustment, y_adjustment = coordinate_adjustment
+        position_x = position_x + x_adjustment
+        position_y = position_y + y_adjustment
+        visited_positions.append((position_x, position_y))
     # Record the new direction
     current_direction = new_direction
-
 # Print result
 print(f'Ending position: ({position_x}, {position_y})')
 print(f'Distance: {abs(position_x) + abs(position_y)}')
