@@ -10,8 +10,10 @@ direction_map = {
 position_x, position_y = 0, 0
 current_direction = 'N'
 
-# Sample Input
-input_text = 'R2, R2, R2'
+# Read input from file
+with open('day_01.txt', 'r') as file_obj:
+    input_text = file_obj.read()
+
 for instruction in input_text.split(', '):
     left_right = instruction[0]     # 'L' or 'R'
     step_text = instruction[1:]     # '2'
